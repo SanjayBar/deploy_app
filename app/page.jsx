@@ -1,42 +1,18 @@
 "use client";
-import React, { useState, useEffect, lazy, Suspense } from "react";
+import { Stage, Layer, Rect, Circle } from "react-konva";
 
-const Hello = () => {
-  const [showMainDiv, setShowMainDiv] = useState(true);
-  const [konvaComponents, setKonvaComponents] = useState({});
-
-  const importKonvaComponents = () => {
-    Promise.all([
-      import("react-konva").then((module) => ({ Stage: module.Stage })),
-      import("react-konva").then((module) => ({ Layer: module.Layer })),
-      import("react-konva").then((module) => ({ Text: module.Text })),
-    ]).then((modules) => {
-      const importedComponents = modules.reduce((acc, module) => {
-        return { ...acc, ...module };
-      }, {});
-      setKonvaComponents(importedComponents);
-    });
-  };
-
+const App = () => {
   return (
-    <div>
-      <button onClick={importKonvaComponents}>Load Konva Components</button>
-      {showMainDiv && (
-        <Suspense fallback={<div>Loading...</div>}>
-          {konvaComponents.Stage &&
-            konvaComponents.Layer &&
-            konvaComponents.Text && (
-              <konvaComponents.Stage width={500} height={500}>
-                <konvaComponents.Layer>
-                  <konvaComponents.Text text='Hello World' />
-                  <konvaComponents.Text text='Hello Worldnnxznnzxnx' />
-                </konvaComponents.Layer>
-              </konvaComponents.Stage>
-            )}
-        </Suspense>
-      )}
-    </div>
+    // Stage - is a div wrapper
+    // Layer - is an actual 2d canvas element, so you can have several layers inside the stage
+    // Rect and Circle are not DOM elements. They are 2d shapes on canvas
+    <Stage width={500} height={500}>
+      <Layer>
+        <Rect width={50} height={50} fill='red' />
+        <Circle x={200} y={200} stroke='black' radius={50} />
+      </Layer>
+    </Stage>
   );
 };
 
-export default Hello;
+export default App;
