@@ -10,12 +10,14 @@ const ResizableImage = ({}) => {
   const [isSelected, setIsSelected] = useState(false);
   const [image, setImage] = useState(null);
 
-  const imageobj = new window.Image();
-  imageobj.src = "https://konvajs.org/assets/yoda.jpg";
+  useEffect(() => {
+    const imageobj = new window.Image();
+    imageobj.src = "https://konvajs.org/assets/yoda.jpg";
 
-  imageobj.onload = () => {
-    setImage(imageobj);
-  };
+    imageobj.onload = () => {
+      setImage(imageobj);
+    };
+  }, []);
 
   const handleSelect = () => {
     setIsSelected(true);
